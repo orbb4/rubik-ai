@@ -4,10 +4,6 @@
 # Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
 
 
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press Ctrl+F8 to toggle the breakpoint.
-
 import math
 import pygame
 
@@ -45,6 +41,23 @@ Face6 = [[46, 47, 48],
 FaceList = [Face1, Face2, Face3, Face4, Face5, Face6 ]
 
 currentFace = 1
+currentLine = 2
+currentColumn = 2
+currentType = 0
+
+
+def rotate(matrix):   #PA ROTAR LA MATRIZ 5 Y 6
+    temp_matrix = []
+    column = len(matrix) - 1
+    for column in range(len(matrix)):
+        temp = []
+        for row in range(len(matrix) - 1, -1, -1):
+            temp.append(matrix[row][column])
+        temp_matrix.append(temp)
+    for i in range(len(matrix)):
+        for j in range(len(matrix)):
+            matrix[i][j] = temp_matrix[i][j]
+    return matrix
 
 def renderFaces():
     color = (255, 255, 255)
@@ -58,7 +71,6 @@ def renderFaces():
                     r = pygame.Rect(bigOffset_X + bigSquareSize * j.index(u), bigOffset_Y +
                                     (bigSquareSize * i.index(j)),
                                     bigSquareSize, bigSquareSize)
-                    print(r)
                 else:
                     r = pygame.Rect(squareSize * j.index(u), squareSize * i.index(j) +
                                     cubeSize*FaceList.index(i), squareSize, squareSize)
@@ -77,27 +89,112 @@ def renderFaces():
                     color = (255, 106, 0)
                 pygame.draw.rect(surface, color, r)
 
+def rotateSelected():
+    global Face1, Face2, Face3, Face4, Face5, Face6
+    aux1 = Face1.copy()
+    aux2 = Face2.copy()
+    aux3 = Face3.copy()
+    aux4 = Face4.copy()
+    aux5 = Face5.copy()
+    aux6 = Face6.copy()
+
+    match currentType:
+        case 0:                             #CASO LINEA
+            match currentLine:
+                case 1:                     #LINEA SUPERIOR
+                    aux1[0] = Face4[0]
+                    aux2[0] = Face1[0]
+                    aux3[0] = Face2[0]
+                    aux4[0] = Face3[0]
+
+                    Face1[0] = aux1[0]
+                    Face2[0] = aux2[0]
+                    Face3[0] = aux3[0]
+                    Face4[0] = aux4[0]
+
+                    rotate(Face5)
+                case 2:                     # LINEA SUPERIOR
+                    aux1[1] = Face4[1]
+                    aux2[1] = Face1[1]
+                    aux3[1] = Face2[1]
+                    aux4[1] = Face3[1]
+
+                    Face1[1] = aux1[1]
+                    Face2[1] = aux2[1]
+                    Face3[1] = aux3[1]
+                    Face4[1] = aux4[1]
+                case 3:  # LINEA INFERIOR
+                    aux1[2] = Face4[2]
+                    aux2[2] = Face1[2]
+                    aux3[2] = Face2[2]
+                    aux4[2] = Face3[2]
+
+                    Face1[2] = aux1[2]
+                    Face2[2] = aux2[2]
+                    Face3[2] = aux3[2]
+                    Face4[2] = aux4[2]
+
+                    rotate(Face6)
+        case 1:             #CASO COLUMNA
+            return 1
 
 # Press the green button in the gutter to run the script.
 if __name__ == "__main__":
+    #PREPARACIÓN INICIAL
     pygame.init()
     my_font = pygame.font.SysFont('Comic Sans MS', 30)
     surface = pygame.display.set_mode(size=(xSize, ySize), vsync=1)
+    renderFaces()
+
     while not endgame:
         pygame.display.flip()
+
+
         for event in pygame.event.get():
+            renderFaces()
             if event.type == pygame.QUIT:
                 endgame = True
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_RETURN:
-                    if currentFace < 6:
+                    if currentFace < 4:
                         currentFace += 1
                     else:
                         currentFace = 1
+
                     print("Cambiando a cara " + str(currentFace))
-                    renderFaces()
+                    currentLine = 2
+                    currentColumn = 2
                 if event.key == pygame.K_UP:
-                    print("Línea seleccionada: ")
+                    if currentLine > 1:
+                        currentLine -= 1
+                    else:
+                        currentLine = 3
+                    currentType = 0
+                    print("Línea seleccionada: " + str(currentLine))
+                if event.key == pygame.K_DOWN:
+                    if currentLine < 3:
+                        currentLine += 1
+                    else:
+                        currentLine = 1
+                    currentType = 0
+                    print("Línea seleccionada: " + str(currentLine))
+                if event.key == pygame.K_RIGHT:
+                    if currentColumn < 3:
+                        currentColumn += 1
+                    else:
+                        currentColumn = 1
+                    currentType = 1
+                    print("Columna seleccionada: " + str(currentColumn))
+                if event.key == pygame.K_LEFT:
+                    if currentColumn > 1:
+                        currentColumn -= 1
+                    else:
+                        currentColumn = 3
+                    currentType = 1
+                    print("Columna seleccionada: " + str(currentColumn))
+
+                if event.key == pygame.K_z:
+                    rotateSelected()
 
     pygame.quit()
 
