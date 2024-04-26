@@ -17,4 +17,4 @@ Representación concreta del estado del juego: Un arreglo de 6 matrices de 3x3, 
 
 Descripción de las acciones que puede tomar el agente: Se toma como base una cara concreta del cubo, y en esta se pueden llevar a cabo las siguientes acciones: Up, Down, Right, Left, Front y Back, cuyo objetivo es girar la zona objetivo en el sentido de las agujas del reloj. Todas son acciones discretas.
 
-Representación concreta de las acciones, representada por una estructura de datos: Cada acción está representada por un número: Up, Down, Right, Left, Front y Back están representadas por 0, 1, 2, 3, 4, 5, y las mismas acciones pero en sentido contrario por 6, 7, 8, 9, 10, 11
+Representación concreta de las acciones, representada por una estructura de datos: Cada acción está representada por un número: Up, Down, Right, Left, Front, CenterH y CenterV están representadas por 0, 1, 2, 3, 4, 5, 6 y las mismas acciones pero en sentido contrario por 7, 8, 9, 10, 11, 12, 13
