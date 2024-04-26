@@ -3,7 +3,7 @@
 Problema:
 Consiste de un cubo de 3x3 con colores desordenados. La meta es obtener cada cara del cubo de un solo color.
 
-Solución: Para solucionar este problema, proponemos utilizar un método de búsqueda estudiado en clase.
+Solución: Para solucionar este problema, proponemos utilizar el método de deep reinforcement learning, basado en el siguiente artículo: https://www.nature.com/articles/s42256-019-0070-z
 
 Descripción del ambiente: 
 -Totalmente observable
