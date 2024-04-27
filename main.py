@@ -92,6 +92,7 @@ def renderFaces():
                 if (u < 10):
                     color = (255, 106, 0)
                 pygame.draw.rect(surface, color, r)
+                pygame.draw.rect(surface, (0, 0, 0), r, 1)
 
 def rotateSelected():
     global Face1, Face2, Face3, Face4, Face5, Face6
