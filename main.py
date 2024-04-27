@@ -176,6 +176,46 @@ def rotateSelected():
                                 Face1[i][2] = aux1[i][2]
                                 Face5[i][2] = aux5[i][2]
                                 Face3[i][2] = aux3[i][2]
+                case 2:
+                    match currentColumn:
+                        case 1:
+                            rotate(Face1)
+                            for i in range(3):
+                                aux2[i][0] = Face6[0][i]
+                                aux5[2][i] = Face2[i][0]
+                                aux4[i][2] = Face5[2][i]
+                                aux6[0][i] = Face4[i][2]
+
+                            for i in range(3):
+                                Face6[0][i] = aux6[0][i]
+                                Face2[i][0] = aux2[i][0]
+                                Face5[2][i] = aux5[2][i]
+                                Face4[i][2] = aux4[i][2]
+                        case 2:
+                            for i in range(3):
+                                aux2[i][1] = Face6[1][i]
+                                aux5[1][i] = Face2[i][1]
+                                aux4[i][1] = Face5[1][i]
+                                aux6[1][i] = Face4[i][1]
+
+                            for i in range(3):
+                                Face6[1][i] = aux6[1][i]
+                                Face2[i][1] = aux2[i][1]
+                                Face5[1][i] = aux5[1][i]
+                                Face4[i][1] = aux4[i][1]
+                        case 3:
+                            rotate(Face3)
+                            for i in range(3):
+                                aux2[i][2] = Face6[2][i]
+                                aux5[0][i] = Face2[i][2]
+                                aux4[i][0] = Face5[0][i]
+                                aux6[2][i] = Face4[i][0]
+
+                            for i in range(3):
+                                Face6[1][i] = aux6[1][i]
+                                Face2[i][1] = aux2[i][1]
+                                Face5[1][i] = aux5[1][i]
+                                Face4[i][1] = aux4[i][1]
     return 1
 
 # Press the green button in the gutter to run the script.
