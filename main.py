@@ -2,8 +2,7 @@
 
 # Press Mayús+F10 to execute it or replace it with your code.
 # Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
-
-
+import copy
 import math
 import pygame
 
@@ -38,7 +37,7 @@ Face6 = [[46, 47, 48],
             [49, 50, 51],
             [52, 53, 54]]
 
-FaceList = [Face1, Face2, Face3, Face4, Face5, Face6 ]
+FaceList = [Face1, Face2, Face3, Face4, Face5, Face6]
 
 currentFace = 1
 currentLine = 2
@@ -91,12 +90,12 @@ def renderFaces():
 
 def rotateSelected():
     global Face1, Face2, Face3, Face4, Face5, Face6
-    aux1 = Face1.copy()
-    aux2 = Face2.copy()
-    aux3 = Face3.copy()
-    aux4 = Face4.copy()
-    aux5 = Face5.copy()
-    aux6 = Face6.copy()
+    aux1 = copy.deepcopy(Face1)
+    aux2 = copy.deepcopy(Face2)
+    aux3 = copy.deepcopy(Face3)
+    aux4 = copy.deepcopy(Face4)
+    aux5 = copy.deepcopy(Face5)
+    aux6 = copy.deepcopy(Face6)
 
     match currentType:
         case 0:                             #CASO LINEA
@@ -136,7 +135,48 @@ def rotateSelected():
 
                     rotate(Face6)
         case 1:             #CASO COLUMNA
-            return 1
+            match currentFace:
+                case 1:
+                    match currentColumn:
+                        case 1:
+                            rotate(Face4)
+                            for i in range(3):
+                                aux1[i][0] = Face6[i][0]
+                                aux5[i][0] = Face1[i][0]
+                                aux3[i][0] = Face5[i][0]
+                                aux6[i][0] = Face3[i][0]
+
+                            for i in range(3):
+                                Face6[i][0] = aux6[i][0]
+                                Face1[i][0] = aux1[i][0]
+                                Face5[i][0] = aux5[i][0]
+                                Face3[i][0] = aux3[i][0]
+                        case 2:
+                            for i in range(3):
+                                aux1[i][1] = Face6[i][1]
+                                aux5[i][1] = Face1[i][1]
+                                aux3[i][1] = Face5[i][1]
+                                aux6[i][1] = Face3[i][1]
+
+                            for i in range(3):
+                                Face6[i][1] = aux6[i][1]
+                                Face1[i][1] = aux1[i][1]
+                                Face5[i][1] = aux5[i][1]
+                                Face3[i][1] = aux3[i][1]
+                        case 3:
+                            rotate(Face2)
+                            for i in range(3):
+                                aux1[i][2] = Face6[i][2]
+                                aux5[i][2] = Face1[i][2]
+                                aux3[i][2] = Face5[i][2]
+                                aux6[i][2] = Face3[i][2]
+
+                            for i in range(3):
+                                Face6[i][2] = aux6[i][2]
+                                Face1[i][2] = aux1[i][2]
+                                Face5[i][2] = aux5[i][2]
+                                Face3[i][2] = aux3[i][2]
+    return 1
 
 # Press the green button in the gutter to run the script.
 if __name__ == "__main__":
