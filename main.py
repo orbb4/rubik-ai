@@ -148,14 +148,14 @@ def rotateSelected():
                             for i in range(3):
                                 aux1[i][0] = Face6[i][0]
                                 aux5[i][0] = Face1[i][0]
-                                aux3[2-i][0] = Face5[i][0]
-                                aux6[i][0] = Face3[2-i][0]
+                                aux3[i][2] = Face5[2-i][0]
+                                aux6[i][0] = Face3[2-i][2]
 
                             for i in range(3):
                                 Face6[i][0] = aux6[i][0]
                                 Face1[i][0] = aux1[i][0]
                                 Face5[i][0] = aux5[i][0]
-                                Face3[i][0] = aux3[i][0]
+                                Face3[i][2] = aux3[i][2]
                         case 2:
                             for i in range(3):
                                 aux1[i][1] = Face6[i][1]
@@ -239,7 +239,7 @@ if __name__ == "__main__":
                 endgame = True
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_RETURN:
-                    if currentFace < 4:
+                    if currentFace < 2:
                         currentFace += 1
                     else:
                         currentFace = 1
