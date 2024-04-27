@@ -148,8 +148,8 @@ def rotateSelected():
                             for i in range(3):
                                 aux1[i][0] = Face6[i][0]
                                 aux5[i][0] = Face1[i][0]
-                                aux3[i][0] = Face5[i][0]
-                                aux6[i][0] = Face3[i][0]
+                                aux3[2-i][0] = Face5[i][0]
+                                aux6[i][0] = Face3[2-i][0]
 
                             for i in range(3):
                                 Face6[i][0] = aux6[i][0]
@@ -160,8 +160,8 @@ def rotateSelected():
                             for i in range(3):
                                 aux1[i][1] = Face6[i][1]
                                 aux5[i][1] = Face1[i][1]
-                                aux3[i][1] = Face5[i][1]
-                                aux6[i][1] = Face3[i][1]
+                                aux3[2-i][1] = Face5[i][1]
+                                aux6[i][1] = Face3[2-i][1]
 
                             for i in range(3):
                                 Face6[i][1] = aux6[i][1]
@@ -173,22 +173,22 @@ def rotateSelected():
                             for i in range(3):
                                 aux1[i][2] = Face6[i][2]
                                 aux5[i][2] = Face1[i][2]
-                                aux3[i][2] = Face5[i][2]
-                                aux6[i][2] = Face3[i][2]
+                                aux3[2-i][0] = Face5[i][2]
+                                aux6[i][2] = Face3[2-i][0]
 
                             for i in range(3):
                                 Face6[i][2] = aux6[i][2]
                                 Face1[i][2] = aux1[i][2]
                                 Face5[i][2] = aux5[i][2]
-                                Face3[i][2] = aux3[i][2]
+                                Face3[i][0] = aux3[i][0]
                 case 2:
                     match currentColumn:
                         case 1:
                             rotate(Face1)
                             for i in range(3):
-                                aux2[i][0] = Face6[0][i]
+                                aux2[2-i][0] = Face6[0][i]
                                 aux5[2][i] = Face2[i][0]
-                                aux4[i][2] = Face5[2][i]
+                                aux4[i][2] = Face5[2][2-i]
                                 aux6[0][i] = Face4[i][2]
 
                             for i in range(3):
@@ -198,9 +198,9 @@ def rotateSelected():
                                 Face4[i][2] = aux4[i][2]
                         case 2:
                             for i in range(3):
-                                aux2[i][1] = Face6[1][i]
+                                aux2[2-i][1] = Face6[1][i]
                                 aux5[1][i] = Face2[i][1]
-                                aux4[i][1] = Face5[1][i]
+                                aux4[i][1] = Face5[1][2-i]
                                 aux6[1][i] = Face4[i][1]
 
                             for i in range(3):
@@ -211,16 +211,15 @@ def rotateSelected():
                         case 3:
                             rotate(Face3)
                             for i in range(3):
-                                aux2[i][2] = Face6[2][i]
+                                aux2[i][2] = Face6[2][2-i]
                                 aux5[0][i] = Face2[i][2]
-                                aux4[i][0] = Face5[0][i]
+                                aux4[2-i][0] = Face5[0][i]
                                 aux6[2][i] = Face4[i][0]
-
                             for i in range(3):
-                                Face6[1][i] = aux6[1][i]
-                                Face2[i][1] = aux2[i][1]
-                                Face5[1][i] = aux5[1][i]
-                                Face4[i][1] = aux4[i][1]
+                                Face6[2][i] = aux6[2][i]
+                                Face2[i][2] = aux2[i][2]
+                                Face5[0][i] = aux5[0][i]
+                                Face4[i][0] = aux4[i][0]
     return 1
 
 # Press the green button in the gutter to run the script.
@@ -292,4 +291,3 @@ if __name__ == "__main__":
                         currentFace = random.randint(1, 6)
                         rotateSelected()
     pygame.quit()
-
