@@ -1,3 +1,5 @@
+import random
+import time
 # This is a sample Python script.
 
 # Press Mayús+F10 to execute it or replace it with your code.
@@ -43,6 +45,9 @@ currentFace = 1
 currentLine = 2
 currentColumn = 2
 currentType = 0
+
+
+
 
 
 def rotate(matrix):   #PA ROTAR LA MATRIZ 5 Y 6
@@ -225,7 +230,6 @@ if __name__ == "__main__":
     my_font = pygame.font.SysFont('Comic Sans MS', 30)
     surface = pygame.display.set_mode(size=(xSize, ySize), vsync=1)
     renderFaces()
-
     while not endgame:
         pygame.display.flip()
 
@@ -275,6 +279,17 @@ if __name__ == "__main__":
 
                 if event.key == pygame.K_z:
                     rotateSelected()
-
+                #shuffle
+                if event.key == pygame.K_s:
+                    for i in range(random.randint(5, 30)):
+                        print(i)
+                        if random.random() < 0.5:
+                            currentColumn=random.randint(1, 3)
+                            currentType=1
+                        else:
+                            currentRow=random.randint(1, 3)
+                            currentType=0
+                        currentFace = random.randint(1, 6)
+                        rotateSelected()
     pygame.quit()
 
