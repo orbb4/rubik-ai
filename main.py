@@ -227,6 +227,7 @@ def rotateSelected():
 if __name__ == "__main__":
     #PREPARACIÓN INICIAL
     pygame.init()
+    k = 5
     my_font = pygame.font.SysFont('Comic Sans MS', 30)
     surface = pygame.display.set_mode(size=(xSize, ySize), vsync=1)
     renderFaces()
@@ -281,7 +282,7 @@ if __name__ == "__main__":
                     rotateSelected()
                 #shuffle
                 if event.key == pygame.K_s:
-                    for i in range(random.randint(5, 30)):
+                    for i in range(k):
                         print(i)
                         if random.random() < 0.5:
                             currentColumn=random.randint(1, 3)
