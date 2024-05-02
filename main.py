@@ -367,15 +367,15 @@ def DFS(cube, depth_max):
                 print("Profundidad: " + str(0) + " cara " + str(i) + " tipo: " + str(j) + " movimiento: " + str(
                         u))
                 rotateSelectedCube(auxCube, i, j, u)
-                if RecursiveDFS(auxCube, depth_max, 0, i, j, u):
+                if RecursiveDFS(auxCube, depth_max, 0):
                     print("printeao")
                     return True
+                auxCube = copy.deepcopy(cube)
     print("no ta :c")
     return False
-    return 0
 
 #face, type y movement se refieren a la cara, el tipo y la i actuales
-def RecursiveDFS(cubeState, depth_max, current_depth, face, type, movement):
+def RecursiveDFS(cubeState, depth_max, current_depth):
     state_depth = current_depth + 1
     print("Profundidad: " + str(state_depth))
     auxCube = copy.deepcopy(cubeState)
@@ -388,12 +388,13 @@ def RecursiveDFS(cubeState, depth_max, current_depth, face, type, movement):
                     return True
                 elif state_depth == depth_max and not getCubeState(auxCube):
                     return False
-                elif state_depth != depth_max and not getCubeState(auxCube):
-                    selectBranch = RecursiveDFS(auxCube, depth_max, state_depth, i, j, u)
                 elif state_depth != depth_max and getCubeState(auxCube):
                     return True
+                elif state_depth != depth_max and not getCubeState(auxCube):
+                    if RecursiveDFS(auxCube, depth_max, state_depth):
+                        selectBranch = True
                 auxCube = copy.deepcopy(cubeState)
-    return False
+    return selectBranch
 
 def getCubeState(cube):
     Face1 = [[1, 2, 3],
