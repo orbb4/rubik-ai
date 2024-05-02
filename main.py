@@ -223,6 +223,203 @@ def rotateSelected():
                                 Face4[i][0] = aux4[i][0]
     return 1
 
+def rotateSelectedCube(Cube, tipo, face, movimiento):
+    Face1 = Cube[0]
+    Face2 = Cube[1]
+    Face3 = Cube[2]
+    Face4 = Cube[3]
+    Face5 = Cube[4]
+    Face6 = Cube[5]
+    aux1 = copy.deepcopy(Face1)
+    aux2 = copy.deepcopy(Face2)
+    aux3 = copy.deepcopy(Face3)
+    aux4 = copy.deepcopy(Face4)
+    aux5 = copy.deepcopy(Face5)
+    aux6 = copy.deepcopy(Face6)
+
+    match currentType:
+        case 0:                             #CASO LINEA
+            match currentLine:
+                case 1:                     #LINEA SUPERIOR
+                    aux1[0] = Face4[0]
+                    aux2[0] = Face1[0]
+                    aux3[0] = Face2[0]
+                    aux4[0] = Face3[0]
+
+                    Face1[0] = aux1[0]
+                    Face2[0] = aux2[0]
+                    Face3[0] = aux3[0]
+                    Face4[0] = aux4[0]
+
+                    rotate(Face5)
+                case 2:                     # LINEA SUPERIOR
+                    aux1[1] = Face4[1]
+                    aux2[1] = Face1[1]
+                    aux3[1] = Face2[1]
+                    aux4[1] = Face3[1]
+
+                    Face1[1] = aux1[1]
+                    Face2[1] = aux2[1]
+                    Face3[1] = aux3[1]
+                    Face4[1] = aux4[1]
+                case 3:  # LINEA INFERIOR
+                    aux1[2] = Face4[2]
+                    aux2[2] = Face1[2]
+                    aux3[2] = Face2[2]
+                    aux4[2] = Face3[2]
+
+                    Face1[2] = aux1[2]
+                    Face2[2] = aux2[2]
+                    Face3[2] = aux3[2]
+                    Face4[2] = aux4[2]
+
+                    rotate(Face6)
+        case 1:             #CASO COLUMNA
+            match currentFace:
+                case 1:
+                    match currentColumn:
+                        case 1:
+                            rotate(Face4)
+                            for i in range(3):
+                                aux1[i][0] = Face6[i][0]
+                                aux5[i][0] = Face1[i][0]
+                                aux3[i][2] = Face5[2-i][0]
+                                aux6[i][0] = Face3[2-i][2]
+
+                            for i in range(3):
+                                Face6[i][0] = aux6[i][0]
+                                Face1[i][0] = aux1[i][0]
+                                Face5[i][0] = aux5[i][0]
+                                Face3[i][2] = aux3[i][2]
+                        case 2:
+                            for i in range(3):
+                                aux1[i][1] = Face6[i][1]
+                                aux5[i][1] = Face1[i][1]
+                                aux3[2-i][1] = Face5[i][1]
+                                aux6[i][1] = Face3[2-i][1]
+
+                            for i in range(3):
+                                Face6[i][1] = aux6[i][1]
+                                Face1[i][1] = aux1[i][1]
+                                Face5[i][1] = aux5[i][1]
+                                Face3[i][1] = aux3[i][1]
+                        case 3:
+                            rotate(Face2)
+                            for i in range(3):
+                                aux1[i][2] = Face6[i][2]
+                                aux5[i][2] = Face1[i][2]
+                                aux3[2-i][0] = Face5[i][2]
+                                aux6[i][2] = Face3[2-i][0]
+
+                            for i in range(3):
+                                Face6[i][2] = aux6[i][2]
+                                Face1[i][2] = aux1[i][2]
+                                Face5[i][2] = aux5[i][2]
+                                Face3[i][0] = aux3[i][0]
+                case 2:
+                    match currentColumn:
+                        case 1:
+                            rotate(Face1)
+                            for i in range(3):
+                                aux2[2-i][0] = Face6[0][i]
+                                aux5[2][i] = Face2[i][0]
+                                aux4[i][2] = Face5[2][2-i]
+                                aux6[0][i] = Face4[i][2]
+
+                            for i in range(3):
+                                Face6[0][i] = aux6[0][i]
+                                Face2[i][0] = aux2[i][0]
+                                Face5[2][i] = aux5[2][i]
+                                Face4[i][2] = aux4[i][2]
+                        case 2:
+                            for i in range(3):
+                                aux2[2-i][1] = Face6[1][i]
+                                aux5[1][i] = Face2[i][1]
+                                aux4[i][1] = Face5[1][2-i]
+                                aux6[1][i] = Face4[i][1]
+
+                            for i in range(3):
+                                Face6[1][i] = aux6[1][i]
+                                Face2[i][1] = aux2[i][1]
+                                Face5[1][i] = aux5[1][i]
+                                Face4[i][1] = aux4[i][1]
+                        case 3:
+                            rotate(Face3)
+                            for i in range(3):
+                                aux2[i][2] = Face6[2][2-i]
+                                aux5[0][i] = Face2[i][2]
+                                aux4[2-i][0] = Face5[0][i]
+                                aux6[2][i] = Face4[i][0]
+                            for i in range(3):
+                                Face6[2][i] = aux6[2][i]
+                                Face2[i][2] = aux2[i][2]
+                                Face5[0][i] = aux5[0][i]
+                                Face4[i][0] = aux4[i][0]
+    return 1
+
+def DFS(cube, depth_max):
+    auxCube = copy.deepcopy(cube)
+    if getCubeState(cube):
+        return True
+    for i in range(1, 3):
+        for j in range(0, 2):
+            for u in range(1, 4):
+                print("Profundidad: " + str(0) + " cara " + str(i) + " tipo: " + str(j) + " movimiento: " + str(
+                        u))
+                rotateSelectedCube(auxCube, i, j, u)
+                if RecursiveDFS(auxCube, depth_max, 0, i, j, u):
+                    print("printeao")
+                    return True
+    print("no ta :c")
+    return False
+    return 0
+
+#face, type y movement se refieren a la cara, el tipo y la i actuales
+def RecursiveDFS(cubeState, depth_max, current_depth, face, type, movement):
+    state_depth = current_depth + 1
+    print("Profundidad: " + str(state_depth))
+    auxCube = copy.deepcopy(cubeState)
+    selectBranch = True
+    for i in range(1, 3):
+        for j in range(0, 2):
+            for u in range(1, 4):
+                rotateSelectedCube(auxCube, i, j, u)
+                if state_depth == depth_max and getCubeState(auxCube):
+                    return True
+                elif state_depth == depth_max and not getCubeState(auxCube):
+                    return False
+                elif state_depth != depth_max and not getCubeState(auxCube):
+                    selectBranch = RecursiveDFS(auxCube, depth_max, state_depth, i, j, u)
+                elif state_depth != depth_max and getCubeState(auxCube):
+                    return True
+                auxCube = copy.deepcopy(cubeState)
+    return False
+
+def getCubeState(cube):
+    Face1 = [[1, 2, 3],
+             [4, 5, 6],
+             [7, 8, 9]]
+    Face2 = [[10, 11, 12],
+             [13, 14, 15],
+             [16, 17, 18]]
+    Face3 = [[19, 20, 21],
+             [22, 23, 24],
+             [25, 26, 27]]
+    Face4 = [[28, 29, 30],
+             [31, 32, 33],
+             [34, 35, 36]]
+    Face5 = [[37, 38, 39],
+             [40, 41, 42],
+             [43, 44, 45]]
+    Face6 = [[46, 47, 48],
+             [49, 50, 51],
+             [52, 53, 54]]
+    FaceList = [Face1, Face2, Face3, Face4, Face5, Face6]
+    if cube == FaceList:
+        return True
+    else:
+        return False
+
 # Press the green button in the gutter to run the script.
 if __name__ == "__main__":
     #PREPARACIÓN INICIAL
@@ -280,6 +477,10 @@ if __name__ == "__main__":
 
                 if event.key == pygame.K_z:
                     rotateSelected()
+
+                #DFS
+                if event.key == pygame.K_l:
+                    DFS(FaceList, 10)
                 #shuffle
                 if event.key == pygame.K_s:
                     for i in range(k):
