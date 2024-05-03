@@ -1,4 +1,5 @@
 import random
+from queue import Queue
 import time
 # This is a sample Python script.
 
@@ -351,6 +352,27 @@ def rotateSelectedCube(Cube, tipo, face, movimiento):
                                 Cube[3][i][0] = aux4[i][0]
     return 1
 
+
+def BFS(cube, depth_max=-1):
+    cube_queue = Queue()
+    cube_queue.put(copy.deepcopy(cube))
+    while cube_queue.qsize() > 0:
+        actual_cube = cube_queue.get()
+        print(actual_cube)
+        if getCubeState(actual_cube):
+            cube_queue.put(actual_cube)
+            return True
+        for f in range(1, 3):
+            # añadimos giros de columnas al stack
+            for c in range(1, 4):
+                rotateSelectedCube(actual_cube, 0, f, c)
+                cube_queue.put(copy.deepcopy(actual_cube))
+            # añadimos giros de filas al stack
+            for r in range(1, 4):
+                rotateSelectedCube(actual_cube, 1, f, r)
+                cube_queue.put(copy.deepcopy(actual_cube))
+    return False
+
 def DFS(cube, depth_max):
     solutionList = []
     auxCube = copy.deepcopy(cube)
@@ -430,7 +452,7 @@ def getCubeState(cube):
 if __name__ == "__main__":
     #PREPARACIÓN INICIAL
     pygame.init()
-    k = 5
+    k = 2
     my_font = pygame.font.SysFont('Comic Sans MS', 30)
     surface = pygame.display.set_mode(size=(xSize, ySize), vsync=1)
     renderFaces()
@@ -486,7 +508,9 @@ if __name__ == "__main__":
 
                 #DFS
                 if event.key == pygame.K_l:
-                    DFS(FaceList, 10)
+                    print(DFS(FaceList, 5))
+                if event.key == pygame.K_b:
+                    print(BFS(FaceList))
                 #shuffle
                 if event.key == pygame.K_s:
                     for i in range(k):
@@ -497,6 +521,6 @@ if __name__ == "__main__":
                         else:
                             currentRow=random.randint(1, 3)
                             currentType=0
-                        currentFace = random.randint(1, 6)
+                        #currentFace = random.randint(1, 2)
                         rotateSelected()
     pygame.quit()
