@@ -1,6 +1,7 @@
 import numpy as np
 import kociemba
 import pycuber
+import random
 from pycuber.solver import CFOPSolver
 
 
@@ -49,13 +50,32 @@ def to_kociemba_format(pycuber_cube):
             aux += 1
         aux += 9
     str_cube_kociemba = "".join(str(sticker) for sticker in cube_kociemba)
+    replacements = {
+        'y': "U",
+        'o': "R",
+        'g': "F",
+        'w': "D",
+        "r": "L",
+        "b": "B"
+    }
+    for sticker in str_cube_kociemba:
+        str_cube_kociemba = str_cube_kociemba.replace(sticker, replacements[sticker])
     return str_cube_kociemba
 
 
-cube = pycuber.Cube()
-kociemba_format = to_kociemba_format(cube)
-
-solver = CFOPSolver(cube)
-solution = solver.solve()
-print("Pasos para resolver el cubo:")
-print(len(solution))
+movements = ["L", "R", "F", "B", "U", "L'", "R'", "F'", "B'", "U'"]
+with open('./data/cube_steps.txt', 'a') as file:
+    for i in range(1000):
+        for n_rotate in range(25):
+            cube = pycuber.Cube()
+            for j in range(n_rotate):
+                cube(movements[random.randint(0, len(movements) - 1)])
+            koc_cube = to_kociemba_format(cube)
+            if n_rotate == 1:
+                steps = 1
+            else:
+                solution = kociemba.solve(koc_cube)
+                steps = len(solution)
+            result = koc_cube + "-" + str(steps) + "\n"
+            file.write(result)
+        print(i)
