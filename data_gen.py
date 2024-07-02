@@ -65,7 +65,7 @@ def to_kociemba_format(pycuber_cube):
 
 movements = ["L", "R", "F", "B", "U", "L'", "R'", "F'", "B'", "U'"]
 with open('./data/cube_steps.txt', 'a') as file:
-    for i in range(1000):
+    for i in range(100):
         for n_rotate in range(25):
             cube = pycuber.Cube()
             for j in range(n_rotate):
@@ -75,7 +75,10 @@ with open('./data/cube_steps.txt', 'a') as file:
                 steps = 1
             else:
                 solution = kociemba.solve(koc_cube)
-                steps = len(solution)
+                steps = len(solution.split())
+            if(n_rotate < steps):
+                steps = n_rotate
+            print(steps)
             result = koc_cube + "-" + str(steps) + "\n"
             file.write(result)
-        print(i)
+        print("rotate:" + str(i))
