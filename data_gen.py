@@ -2,7 +2,10 @@ import numpy as np
 import kociemba
 import pycuber
 import random
-from pycuber.solver import CFOPSolver
+
+
+
+
 
 
 def to_kociemba_format(pycuber_cube):
@@ -64,21 +67,21 @@ def to_kociemba_format(pycuber_cube):
 
 
 movements = ["L", "R", "F", "B", "U", "L'", "R'", "F'", "B'", "U'"]
-with open('./data/cube_steps.txt', 'a') as file:
-    for i in range(100):
-        for n_rotate in range(25):
-            cube = pycuber.Cube()
-            for j in range(n_rotate):
-                cube(movements[random.randint(0, len(movements) - 1)])
+with open('./data/26scramble.txt', 'a') as file:
+    for i in range(40000):
+        cube = pycuber.Cube()
+        for n_rotate in range(27):
+            cube(random.choice(movements))
+            print(cube)
             koc_cube = to_kociemba_format(cube)
             if n_rotate == 1:
                 steps = 1
             else:
                 solution = kociemba.solve(koc_cube)
                 steps = len(solution.split())
-            if(n_rotate < steps):
+            if n_rotate < steps:
                 steps = n_rotate
-            print(steps)
             result = koc_cube + "-" + str(steps) + "\n"
             file.write(result)
+            print(result)
         print("rotate:" + str(i))
