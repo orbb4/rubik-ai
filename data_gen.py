@@ -1,19 +1,23 @@
-import numpy as np
-import kociemba
-import pycuber
 import random
 
+import kociemba
+# import numpy as np
+import pycuber
 
 
-
-
-
-def to_kociemba_format(pycuber_cube):
-    cube_str = str(pycuber_cube).replace(" ", "").replace("[", "").replace("]", "").replace("\n", "")
-    cube_list = []
+def to_kociemba_format(pycuber_cube: pycuber.Cube) -> str:
+    """Transfoma un `pycuber.Cube` al formato kociemba"""
+    cube_str = (
+        str(pycuber_cube)
+        .replace(" ", "")
+        .replace("[", "")
+        .replace("]", "")
+        .replace("\n", "")
+    )
+    cube_list: list[str] = []
     for num in range(len(cube_str)):
         cube_list.append(cube_str[num])
-    cube_kociemba = []
+    cube_kociemba: list[str] = []
 
     # U stickers
     for num in range(9):
@@ -53,21 +57,14 @@ def to_kociemba_format(pycuber_cube):
             aux += 1
         aux += 9
     str_cube_kociemba = "".join(str(sticker) for sticker in cube_kociemba)
-    replacements = {
-        'y': "U",
-        'o': "R",
-        'g': "F",
-        'w': "D",
-        "r": "L",
-        "b": "B"
-    }
+    replacements = {"y": "U", "o": "R", "g": "F", "w": "D", "r": "L", "b": "B"}
     for sticker in str_cube_kociemba:
         str_cube_kociemba = str_cube_kociemba.replace(sticker, replacements[sticker])
     return str_cube_kociemba
 
 
 movements = ["L", "R", "F", "B", "U", "L'", "R'", "F'", "B'", "U'"]
-with open('./data/26scramble.txt', 'a') as file:
+with open("./data/26scramble.txt", "a") as file:
     for i in range(40000):
         cube = pycuber.Cube()
         for n_rotate in range(27):
@@ -81,7 +78,7 @@ with open('./data/26scramble.txt', 'a') as file:
                 steps = len(solution.split())
             if n_rotate < steps:
                 steps = n_rotate
-            result = koc_cube + "-" + str(steps) + "\n"
+            result = f"{koc_cube}-{str(steps)}\n"
             file.write(result)
             print(result)
-        print("rotate:" + str(i))
+        print(f"rotate: {i}")
