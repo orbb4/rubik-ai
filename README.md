@@ -1,5 +1,7 @@
 # rubik-ai
 
+Para probar el funcionamiento del modelo, basta con ejecutar el archivo "solver.py", el cual mostrará la búsqueda de la solución de un cubo de rubik desordenado utilizando el modelo "solverB.h5", presente en este mismo repositorio.
+
 Problema:
 Consiste de un cubo de 3x3 con colores desordenados. La meta es obtener cada cara del cubo de un solo color.
 
